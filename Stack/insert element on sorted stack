@@ -1,0 +1,37 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+void solve(stack<int> &st, int data){
+    
+    if((st.empty() == false && st.top() < data) || (st.empty() == true) ){
+        st.push(data);
+        return;
+    }
+    
+    int temp = st.top();
+    st.pop();
+    
+    solve(st, data);
+    
+    st.push(temp);
+    
+}
+
+int main() {
+	stack<int> st;
+	
+	st.push(10);
+	st.push(20);
+	st.push(30);
+	st.push(40);
+	
+	solve(st,25);
+	
+	while(!st.empty()){
+	    cout<<st.top()<<" ";
+	    st.pop();
+	}
+	cout<<endl;
+	return 0;
+}
