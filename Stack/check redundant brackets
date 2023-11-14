@@ -1,0 +1,42 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+bool checkRedundantParenthesis(string &str){
+    stack<char> st;
+    for(int i = 0; i< str.length(); i++){
+        char ch = str[i];
+        
+        if(ch == '(' || ch == '+' || ch == '-' || ch == '*' || ch == '/')
+            st.push(ch);
+        else if(ch == ')'){
+            int len = 0;
+            while(st.top() != '('){
+                st.pop();
+                len++;
+            }
+            if(len == 0){
+                return true;
+            }
+            else{
+                st.pop();
+            }
+        }
+    }
+    if(st.empty())
+        return false;
+    else
+        return true;
+}
+
+int main() {
+	string str = "((a+b)*(c+d))";
+	bool ans = checkRedundantParenthesis(str);
+    if(ans)
+        cout<<"redundant "<<endl;
+    else
+        cout<<" no redundant "<<endl;
+    
+	return 0;
+}
+
