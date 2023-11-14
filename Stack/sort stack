@@ -1,0 +1,51 @@
+#include <iostream>
+#include <stack>
+using namespace std;
+
+void solve(stack<int> &st, int data){
+    
+    if((st.empty() == false && st.top() < data) || (st.empty() == true) ){
+        st.push(data);
+        return;
+    }
+    
+    int temp = st.top();
+    st.pop();
+    
+    solve(st, data);
+    
+    st.push(temp);
+    
+}
+
+void sort(stack<int> &st){
+    if(st.empty()){
+        return;
+    }
+    
+    int temp = st.top();
+    st.pop();
+    
+    sort(st);
+    
+    solve(st,temp);
+}
+
+int main() {
+	stack<int> st;
+	
+	st.push(10);
+	st.push(5);
+	st.push(12);
+	st.push(8);
+	st.push(9);
+	
+	sort(st);
+	
+	while(!st.empty()){
+	    cout<<st.top()<<" ";
+	    st.pop();
+	}
+	cout<<endl;
+	return 0;
+}
