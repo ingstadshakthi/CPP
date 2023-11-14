@@ -1,0 +1,47 @@
+class Solution{
+public:
+    int getLength(Node* head){
+        int len = 0;
+        Node* temp = head;
+        while(temp != NULL){
+            temp = temp->next;
+            len++;
+        }
+        return len;
+    }
+    int getNthFromLast(Node *head, int n)
+    {
+           if(n > getLength(head)){
+               return -1;
+           }
+           
+           Node* fast = head;
+           Node* slow = head;
+           int f = 1;
+           int s = 1;
+           
+           while( fast != NULL){
+               fast = fast->next;
+               f++;
+               if(fast != NULL){
+                   fast= fast->next;
+                   f++;
+                   slow = slow->next;
+                   s++;
+               }
+           }
+           int removePos = f - n;
+           
+           if(removePos < s){
+               slow = head;
+               for(int i = 1; i< removePos; i++){
+                   slow = slow->next;
+               }
+           }else{
+               for(int i = s; i < removePos; i++){
+                   slow = slow->next;
+               }
+           }
+           return slow->data;
+    }
+};
