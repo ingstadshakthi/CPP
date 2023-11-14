@@ -1,0 +1,73 @@
+class Solution {
+public:
+    void print(Node* head){
+        Node* temp = head;
+        while(temp){
+            cout<<temp->val<<"->";
+            temp = temp->next;
+        }
+        cout<<endl;
+    }
+    int getIndex(Node* head, Node* ptr){
+
+        Node* temp = head;
+        int ind = 0;
+        while(temp != ptr){
+            ind++;
+            temp= temp->next;
+        }
+        return ind;
+    }
+    Node* getPtr(Node* head, int pos){
+        Node* temp = head;
+        for(int i=0;i<pos; i++){
+            temp = temp->next;
+        }
+        return temp;
+    }
+    Node* copyRandomList(Node* head) {
+
+        if(head == NULL){
+            return head;
+        }
+
+        vector<int> randomArr;
+        Node* temp = head;
+        while(temp){
+            if(temp->random == NULL){
+                randomArr.push_back(-1);
+            }else{
+                randomArr.push_back(getIndex(head,temp->random));
+            }
+            temp = temp->next;
+        }
+        temp = head;
+        Node* ans;
+
+        Node* newNode = new Node(temp->val);
+        ans = newNode;
+        Node* ansTemp = ans;
+        temp = temp->next;
+
+        while(temp){
+            Node* newNode = new Node(temp->val);
+            ansTemp->next = newNode;
+            temp = temp->next;
+            ansTemp = ansTemp->next;
+        }
+
+        ansTemp = ans;
+        int pos = 0;
+        while(ansTemp){
+            if(randomArr[pos] == -1){
+                ansTemp->random = NULL;
+            }else{
+                ansTemp->random = getPtr(ans,randomArr[pos]);
+            }
+            ansTemp = ansTemp->next;
+            pos++;
+        }
+
+        return ans;
+    }
+};
